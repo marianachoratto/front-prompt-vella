@@ -62,7 +62,7 @@ function App() {
           "Enviar prompts"
         )}
       </button>
-      {respostaApi && <div>{respostaApi}</div>}
+      {respostaApi && <div className="mt-3 fs-5">{respostaApi}</div>}
     </>
   );
 }

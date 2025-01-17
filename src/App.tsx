@@ -11,15 +11,20 @@ function App() {
   function enviarArquivo() {
     const prompt3 = document.getElementById("prompt-3") as HTMLTextAreaElement;
     const prompt4 = document.getElementById("prompt-4") as HTMLTextAreaElement;
-    const enviarArquivo = document.getElementById(
-      "enviarArquivo"
+
+    const inputContext = document.getElementById(
+      "contextual-chunks"
     ) as HTMLInputElement;
-    console.log(prompt3?.value, prompt4?.value, enviarArquivo.value);
+    console.log(typeof inputContext.checked);
 
     const formData = new FormData();
     formData.append("files", selectedFile);
     formData.append("prompt_auxiliar", prompt3?.value);
     formData.append("prompt_gerar_documento", prompt4?.value);
+    formData.append(
+      "should_have_contextual_chunks",
+      String(inputContext.checked)
+    );
     setIsLoading(true);
     axios
       .post(
@@ -44,6 +49,8 @@ function App() {
         modelo do usuário enviado pelo front
       </p>
       <textarea name="" id="prompt-4" className="form-control"></textarea>
+      <input type="checkbox" id="contextual-chunks" className="me-2" />
+      <label htmlFor="contextual-chunks">Contextual-chunk</label>
       <input
         type="file"
         className="form-control mt-3"

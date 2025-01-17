@@ -5,6 +5,8 @@ import { useState } from "react";
 
 function App() {
   const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [respostaApi, setRespostaApi] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function enviarArquivo() {
     const prompt3 = document.getElementById("prompt-3") as HTMLTextAreaElement;
@@ -18,10 +20,16 @@ function App() {
     formData.append("files", selectedFile);
     formData.append("prompt_auxiliar", prompt3?.value);
     formData.append("prompt_gerar_documento", prompt4?.value);
-    axios.post(
-      "https://luanpoppe-vella-backend.hf.space/gerar-documento/pdf",
-      formData
-    );
+    setIsLoading(true);
+    axios
+      .post(
+        "https://luanpoppe-vella-backend.hf.space/gerar-documento/pdf",
+        formData
+      )
+      .then((res) => {
+        setRespostaApi(res.data.resposta.texto_completo);
+        setIsLoading(false);
+      });
   }
 
   return (
@@ -46,8 +54,15 @@ function App() {
       />
       <br />
       <button className="btn btn-success" onClick={enviarArquivo}>
-        Enviar prompts
+        {isLoading ? (
+          <div className="spinner-border text-light" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        ) : (
+          "Enviar prompts"
+        )}
       </button>
+      {respostaApi && <div>{respostaApi}</div>}
     </>
   );
 }

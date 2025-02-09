@@ -35,7 +35,7 @@ function App() {
     );
 
     setIsLoading(true);
-    const url = isLocalServer
+    const url = isLocalServer.checked
       ? "http://localhost:8000/gerar-documento/pdf"
       : "https://luanpoppe-vella-backend.hf.space/gerar-documento/pdf";
     axios

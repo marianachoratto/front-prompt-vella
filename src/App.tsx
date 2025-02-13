@@ -16,9 +16,7 @@ function App() {
       "contextual-chunks"
     ) as HTMLInputElement;
 
-    const isLocalServer = document.getElementById(
-      "is-local-server"
-    ) as HTMLInputElement;
+    const ambiente = document.getElementById("ambiente") as HTMLSelectElement;
 
     const llmUltimasRequests = document.getElementById(
       "llm-ultimas-requests"
@@ -35,9 +33,15 @@ function App() {
     );
 
     setIsLoading(true);
-    const url = isLocalServer.checked
-      ? "http://localhost:8000/gerar-documento/pdf"
-      : "https://luanpoppe-vella-backend.hf.space/gerar-documento/pdf";
+    debugger;
+    const url =
+      ambiente.value == "local"
+        ? "http://localhost:8000/gerar-documento/pdf"
+        : ambiente.value == "tests"
+        ? "https://luanpoppe-vella-backend-tests.hf.space/gerar-documento/pdf"
+        : ambiente.value == "producao"
+        ? "https://luanpoppe-vella-backend.hf.space/gerar-documento/pdf"
+        : "";
     axios
       .post(url, formData)
       .then((res) => {
@@ -78,16 +82,6 @@ function App() {
       />
       <label htmlFor="contextual-chunks">Contextual-chunk</label>
 
-      <div className="mt-2">
-        <input
-          type="checkbox"
-          defaultChecked={false}
-          id="is-local-server"
-          className="me-2"
-        />
-        <label htmlFor="is-local-server">Rodar local? (Luan)</label>
-      </div>
-
       <label className="mt-4 mb-2 d-block" htmlFor="llm-ultimas-requests">
         LLM últimas requests
       </label>
@@ -96,6 +90,17 @@ function App() {
           GPT 4o mini
         </option>
         <option value="deepseek-chat">Deepseek Chat</option>
+      </select>
+
+      <label className="mt-4 mb-2 d-block" htmlFor="ambiente">
+        Ambiente:
+      </label>
+      <select className="form-select" id="ambiente">
+        <option value="local">Local (Luan)</option>
+        <option selected value="tests">
+          Ambiente de Testes
+        </option>
+        <option value="producao">Produção</option>
       </select>
 
       <input

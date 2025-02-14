@@ -33,7 +33,6 @@ function App() {
     );
 
     setIsLoading(true);
-    debugger;
     const url =
       ambiente.value == "local"
         ? "http://localhost:8000/gerar-documento/pdf"
@@ -86,9 +85,10 @@ function App() {
         LLM últimas requests
       </label>
       <select className="form-select" id="llm-ultimas-requests">
-        <option selected value="gpt-4o-mini">
-          GPT 4o mini
+        <option selected value="gemini-2.0-flash">
+          Google Gemini 2.0 Flash
         </option>
+        <option value="gpt-4o-mini">GPT 4o mini</option>
         <option value="deepseek-chat">Deepseek Chat</option>
       </select>
 

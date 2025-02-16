@@ -9,7 +9,7 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function enviarArquivo() {
-    const prompt3 = document.getElementById("prompt-3") as HTMLTextAreaElement;
+    // const prompt3 = document.getElementById("prompt-3") as HTMLTextAreaElement;
     const prompt4 = document.getElementById("prompt-4") as HTMLTextAreaElement;
 
     const inputContext = document.getElementById(
@@ -24,7 +24,7 @@ function App() {
 
     const formData = new FormData();
     formData.append("files", selectedFile);
-    formData.append("prompt_auxiliar", prompt3?.value);
+    // formData.append("prompt_auxiliar", prompt3?.value);
     formData.append("prompt_gerar_documento", prompt4?.value);
     formData.append("llm_ultimas_requests", llmUltimasRequests?.value);
     formData.append(
@@ -53,14 +53,14 @@ function App() {
 
   return (
     <>
-      <h1>Prompt 3</h1>
+      {/* <h1>Prompt 3</h1>
       <p>Faz um resumo completo do documento todo. É utilizado no 4º prompt</p>
       <textarea
         style={{ height: "200px" }}
         name=""
         id="prompt-3"
         className="form-control"
-      ></textarea>
+      ></textarea> */}
       <h1>Prompt 4</h1>
       <p>
         {" "}

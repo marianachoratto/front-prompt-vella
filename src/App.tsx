@@ -44,7 +44,7 @@ function App() {
     axios
       .post(url, formData)
       .then((res) => {
-        setRespostaApi(res.data.resposta.texto_completo);
+        setRespostaApi(res.data.resposta);
       })
       .finally(() => {
         setIsLoading(false);
@@ -122,7 +122,12 @@ function App() {
           "Enviar prompts"
         )}
       </button>
-      {respostaApi && <div className="mt-3 fs-5">{respostaApi}</div>}
+      {respostaApi && (
+        <section>
+          <h3>{respostaApi.titulo_do_documento}</h3>
+          <div className="mt-3 fs-5">{respostaApi.texto_completo}</div>
+        </section>
+      )}
     </>
   );
 }

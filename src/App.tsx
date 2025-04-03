@@ -4,7 +4,7 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null); // Changed state name and type
   const [respostaApi, setRespostaApi] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -23,7 +23,13 @@ function App() {
     ) as HTMLSelectElement;
 
     const formData = new FormData();
-    formData.append("files", selectedFile);
+    // Loop through selected files and append them
+    if (selectedFiles) {
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append("files", selectedFiles[i]);
+        console.log(`PDF ${i} enviado`);
+      }
+    }
     // formData.append("prompt_auxiliar", prompt3?.value);
     formData.append("prompt_gerar_documento", prompt4?.value);
     formData.append("llm_ultimas_requests", llmUltimasRequests?.value);
@@ -65,14 +71,16 @@ function App() {
       <p>
         {" "}
         Prompt que realmente gera o documento. Recebe o prompt específico do
-        modelo do usuário enviado pelo front
+        modelo do usuário enviado pelo front.
       </p>
-      <textarea
-        style={{ height: "200px" }}
-        name=""
-        id="prompt-4"
-        className="form-control"
-      ></textarea>
+      <div>
+        <textarea
+          style={{ height: "200px" }}
+          name=""
+          id="prompt-4"
+          className="form-control"
+        ></textarea>
+      </div>
       <input
         type="checkbox"
         defaultChecked
@@ -107,8 +115,9 @@ function App() {
         type="file"
         className="form-control mt-3"
         id="enviarArquivo"
+        multiple
         onChange={(event) => {
-          setSelectedFile(event?.target?.files?.[0]);
+          setSelectedFiles(event?.target?.files);
         }}
       />
 

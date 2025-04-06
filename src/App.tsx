@@ -134,7 +134,11 @@ function App() {
       {respostaApi && (
         <section>
           <h3>{respostaApi.titulo_do_documento}</h3>
-          <div className="mt-3 fs-5">{respostaApi.texto_completo}</div>
+          <div
+            className="mt-3 fs-5"
+            id="resultado-final"
+            dangerouslySetInnerHTML={{ __html: respostaApi.texto_completo }}
+          ></div>
         </section>
       )}
     </>

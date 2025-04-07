@@ -9,8 +9,15 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function enviarArquivo() {
-    // const prompt3 = document.getElementById("prompt-3") as HTMLTextAreaElement;
-    const prompt4 = document.getElementById("prompt-4") as HTMLTextAreaElement;
+    const promptGerarDocumento = document.getElementById(
+      "prompt-gerar-documento"
+    ) as HTMLTextAreaElement;
+    const promptGerarDocumentoEtapa2 = document.getElementById(
+      "prompt-etapa-2"
+    ) as HTMLTextAreaElement;
+    const promptGerarDocumentoEtapa3 = document.getElementById(
+      "prompt-etapa-3"
+    ) as HTMLTextAreaElement;
 
     const inputContext = document.getElementById(
       "contextual-chunks"
@@ -31,12 +38,22 @@ function App() {
       }
     }
     // formData.append("prompt_auxiliar", prompt3?.value);
-    formData.append("prompt_gerar_documento", prompt4?.value);
+    formData.append("prompt_gerar_documento", promptGerarDocumento?.value);
     formData.append("llm_ultimas_requests", llmUltimasRequests?.value);
     formData.append(
       "should_have_contextual_chunks",
       String(inputContext.checked)
     );
+    if (promptGerarDocumentoEtapa2.value)
+      formData.append(
+        "prompt_gerar_documento_etapa_2",
+        promptGerarDocumentoEtapa2.value
+      );
+    if (promptGerarDocumentoEtapa3.value)
+      formData.append(
+        "prompt_gerar_documento_etapa_3",
+        promptGerarDocumentoEtapa3.value
+      );
 
     setIsLoading(true);
     const url =
@@ -77,9 +94,23 @@ function App() {
         <textarea
           style={{ height: "200px" }}
           name=""
-          id="prompt-4"
-          className="form-control"
-        ></textarea>
+          id="prompt-gerar-documento"
+          className="form-control mb-2"
+        />
+        <label htmlFor="prompt-etapa-2">Prompt Etapa 2 (Opcional)</label>
+        <textarea
+          style={{ height: "100px" }}
+          name=""
+          id="prompt-etapa-2"
+          className="form-control mb-2"
+        />
+        <label htmlFor="prompt-etapa-3">Prompt Etapa 3 (Opcional)</label>
+        <textarea
+          style={{ height: "100px" }}
+          name=""
+          id="prompt-etapa-3"
+          className="form-control mb-2"
+        />
       </div>
       <input
         type="checkbox"

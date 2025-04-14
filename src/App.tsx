@@ -67,11 +67,14 @@ function App() {
         LLM últimas requests
       </label>
       <select className="form-select" id="llm-ultimas-requests">
-        <option selected value="gemini-2.0-flash">
+        <option selected={mode == "documento"} value="gemini-2.0-flash">
           Google Gemini 2.0 Flash
         </option>
         <option value="gpt-4o-mini">GPT 4o mini</option>
         <option value="deepseek-chat">Deepseek Chat</option>
+        <option selected={mode == "ementa"} value="gemini-2.5-.pro">
+          Google Gemini 2.5 pro
+        </option>
       </select>
 
       <label className="mt-4 mb-2 d-block" htmlFor="ambiente">

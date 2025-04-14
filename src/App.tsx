@@ -72,7 +72,7 @@ function App() {
         </option>
         <option value="gpt-4o-mini">GPT 4o mini</option>
         <option value="deepseek-chat">Deepseek Chat</option>
-        <option selected={mode == "ementa"} value="gemini-2.5-.pro">
+        <option selected={mode == "ementa"} value="gemini-2.5-pro">
           Google Gemini 2.5 pro
         </option>
       </select>

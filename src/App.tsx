@@ -1,92 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios";
 import "./App.css";
 import { useState } from "react";
+import { enviarArquivo } from "./utils/enviarArquivo";
 
 function App() {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null); // Changed state name and type
   const [respostaApi, setRespostaApi] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  function enviarArquivo() {
-    const promptGerarDocumento = document.getElementById(
-      "prompt-gerar-documento"
-    ) as HTMLTextAreaElement;
-    const promptGerarDocumentoEtapa2 = document.getElementById(
-      "prompt-etapa-2"
-    ) as HTMLTextAreaElement;
-    const promptGerarDocumentoEtapa3 = document.getElementById(
-      "prompt-etapa-3"
-    ) as HTMLTextAreaElement;
-
-    const inputContext = document.getElementById(
-      "contextual-chunks"
-    ) as HTMLInputElement;
-
-    const ambiente = document.getElementById("ambiente") as HTMLSelectElement;
-
-    const llmUltimasRequests = document.getElementById(
-      "llm-ultimas-requests"
-    ) as HTMLSelectElement;
-
-    const formData = new FormData();
-    // Loop through selected files and append them
-    if (selectedFiles) {
-      for (let i = 0; i < selectedFiles.length; i++) {
-        formData.append("files", selectedFiles[i]);
-        console.log(`PDF ${i} enviado`);
-      }
-    }
-    // formData.append("prompt_auxiliar", prompt3?.value);
-    formData.append("prompt_gerar_documento", promptGerarDocumento?.value);
-    formData.append("llm_ultimas_requests", llmUltimasRequests?.value);
-    formData.append(
-      "should_have_contextual_chunks",
-      String(inputContext.checked)
-    );
-    if (promptGerarDocumentoEtapa2.value)
-      formData.append(
-        "prompt_gerar_documento_etapa_2",
-        promptGerarDocumentoEtapa2.value
-      );
-    if (promptGerarDocumentoEtapa3.value)
-      formData.append(
-        "prompt_gerar_documento_etapa_3",
-        promptGerarDocumentoEtapa3.value
-      );
-
-    setIsLoading(true);
-    const url =
-      ambiente.value == "local"
-        ? "http://localhost:8000/gerar-documento/pdf"
-        : ambiente.value == "tests"
-        ? "https://luanpoppe-vella-backend-tests.hf.space/gerar-documento/pdf"
-        : ambiente.value == "producao"
-        ? "https://luanpoppe-vella-backend.hf.space/gerar-documento/pdf"
-        : "";
-    axios
-      .post(url, formData)
-      .then((res) => {
-        setRespostaApi(res.data.resposta);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }
+  const [mode, setMode] = useState<ModoAtivo>("documento");
 
   return (
     <>
-      {/* <h1>Prompt 3</h1>
-      <p>Faz um resumo completo do documento todo. É utilizado no 4º prompt</p>
-      <textarea
-        style={{ height: "200px" }}
-        name=""
-        id="prompt-3"
-        className="form-control"
-      ></textarea> */}
-      <h1>Prompt 4</h1>
+      <h1>Gerar {mode == "documento" ? "Documento Padrão" : "Ementa"}</h1>
+      <div className="d-flex justify-content-center align-items-center gap-2">
+        <h5>Se quiser usar o gerador de ementa: </h5>
+        <button
+          className="p-2"
+          onClick={() => setMode(mode == "documento" ? "ementa" : "documento")}
+        >
+          clique aqui
+        </button>
+      </div>
+      <hr />
       <p>
-        {" "}
         Prompt que realmente gera o documento. Recebe o prompt específico do
         modelo do usuário enviado pelo front.
       </p>
@@ -97,28 +33,32 @@ function App() {
           id="prompt-gerar-documento"
           className="form-control mb-2"
         />
-        <label htmlFor="prompt-etapa-2">Prompt Etapa 2 (Opcional)</label>
-        <textarea
-          style={{ height: "100px" }}
-          name=""
-          id="prompt-etapa-2"
-          className="form-control mb-2"
-        />
-        <label htmlFor="prompt-etapa-3">Prompt Etapa 3 (Opcional)</label>
-        <textarea
-          style={{ height: "100px" }}
-          name=""
-          id="prompt-etapa-3"
-          className="form-control mb-2"
-        />
+        {mode == "documento" && (
+          <div>
+            <label htmlFor="prompt-etapa-2">Prompt Etapa 2 (Opcional)</label>
+            <textarea
+              style={{ height: "100px" }}
+              name=""
+              id="prompt-etapa-2"
+              className="form-control mb-2"
+            />
+            <label htmlFor="prompt-etapa-3">Prompt Etapa 3 (Opcional)</label>
+            <textarea
+              style={{ height: "100px" }}
+              name=""
+              id="prompt-etapa-3"
+              className="form-control mb-2"
+            />
+            <input
+              type="checkbox"
+              defaultChecked
+              id="contextual-chunks"
+              className="me-2"
+            />
+            <label htmlFor="contextual-chunks">Contextual-chunk</label>
+          </div>
+        )}
       </div>
-      <input
-        type="checkbox"
-        defaultChecked
-        id="contextual-chunks"
-        className="me-2"
-      />
-      <label htmlFor="contextual-chunks">Contextual-chunk</label>
 
       <label className="mt-4 mb-2 d-block" htmlFor="llm-ultimas-requests">
         LLM últimas requests
@@ -153,13 +93,18 @@ function App() {
       />
 
       <br />
-      <button className="btn btn-success" onClick={enviarArquivo}>
+      <button
+        className="btn btn-success"
+        onClick={() =>
+          enviarArquivo(mode, selectedFiles, setIsLoading, setRespostaApi)
+        }
+      >
         {isLoading ? (
           <div className="spinner-border text-light" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
         ) : (
-          "Enviar prompts"
+          `Enviar prompts gerar ${mode == "documento" ? "DOCUMENTO" : "EMENTA"}`
         )}
       </button>
       {respostaApi && (

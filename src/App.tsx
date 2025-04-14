@@ -13,7 +13,10 @@ function App() {
     <>
       <h1>Gerar {mode == "documento" ? "Documento Padrão" : "Ementa"}</h1>
       <div className="d-flex justify-content-center align-items-center gap-2">
-        <h5>Se quiser usar o gerador de ementa: </h5>
+        <h5>
+          Se quiser usar o gerador de{" "}
+          {mode == "documento" ? "ementa" : "documento"}:{" "}
+        </h5>
         <button
           className="p-2"
           onClick={() => setMode(mode == "documento" ? "ementa" : "documento")}

@@ -36,31 +36,34 @@ function App() {
           id="prompt-gerar-documento"
           className="form-control mb-2"
         />
-        {mode == "documento" && (
-          <div>
-            <label htmlFor="prompt-etapa-2">Prompt Etapa 2 (Opcional)</label>
-            <textarea
-              style={{ height: "100px" }}
-              name=""
-              id="prompt-etapa-2"
-              className="form-control mb-2"
-            />
-            <label htmlFor="prompt-etapa-3">Prompt Etapa 3 (Opcional)</label>
-            <textarea
-              style={{ height: "100px" }}
-              name=""
-              id="prompt-etapa-3"
-              className="form-control mb-2"
-            />
-            <input
-              type="checkbox"
-              defaultChecked
-              id="contextual-chunks"
-              className="me-2"
-            />
-            <label htmlFor="contextual-chunks">Contextual-chunk</label>
-          </div>
-        )}
+        <div>
+          <label htmlFor="prompt-etapa-2">Prompt Etapa 2 (Opcional)</label>
+          <textarea
+            style={{ height: "100px" }}
+            name=""
+            id="prompt-etapa-2"
+            className="form-control mb-2"
+          />
+          <label htmlFor="prompt-etapa-3">Prompt Etapa 3 (Opcional)</label>
+          <textarea
+            style={{ height: "100px" }}
+            name=""
+            id="prompt-etapa-3"
+            className="form-control mb-2"
+          />
+
+          {mode == "documento" && (
+            <div>
+              <input
+                type="checkbox"
+                defaultChecked
+                id="contextual-chunks"
+                className="me-2"
+              />
+              <label htmlFor="contextual-chunks">Contextual-chunk</label>
+            </div>
+          )}
+        </div>
       </div>
 
       <label className="mt-4 mb-2 d-block" htmlFor="llm-ultimas-requests">

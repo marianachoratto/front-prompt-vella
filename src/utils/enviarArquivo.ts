@@ -44,17 +44,18 @@ export function enviarArquivo(
       "should_have_contextual_chunks",
       String(inputContext.checked)
     );
-    if (promptGerarDocumentoEtapa2.value)
-      formData.append(
-        "prompt_gerar_documento_etapa_2",
-        promptGerarDocumentoEtapa2.value
-      );
-    if (promptGerarDocumentoEtapa3.value)
-      formData.append(
-        "prompt_gerar_documento_etapa_3",
-        promptGerarDocumentoEtapa3.value
-      );
   }
+
+  if (promptGerarDocumentoEtapa2.value)
+    formData.append(
+      "prompt_gerar_documento_etapa_2",
+      promptGerarDocumentoEtapa2.value
+    );
+  if (promptGerarDocumentoEtapa3.value)
+    formData.append(
+      "prompt_gerar_documento_etapa_3",
+      promptGerarDocumentoEtapa3.value
+    );
 
   setIsLoading(true);
   const modoAtivo = mode == "documento" ? "gerar-documento" : "gerar-ementa";

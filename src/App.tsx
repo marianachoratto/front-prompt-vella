@@ -73,6 +73,7 @@ function App() {
         <option selected={mode == "documento"} value="gemini-2.0-flash">
           Google Gemini 2.0 Flash
         </option>
+        <option value="gemini-2.5-flash">Google Gemini 2.5 Flash</option>
         <option value="gpt-4o-mini">GPT 4o mini</option>
         <option value="deepseek-chat">Deepseek Chat</option>
         <option selected={mode == "ementa"} value="gemini-2.5-pro">

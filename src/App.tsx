@@ -2,6 +2,7 @@
 import "./App.css";
 import { useState } from "react";
 import { enviarArquivo } from "./utils/enviarArquivo";
+import { fazerDownloadResultado } from "./utils/download";
 
 function App() {
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null); // Changed state name and type
@@ -118,14 +119,28 @@ function App() {
         )}
       </button>
       {respostaApi && (
-        <section>
-          <h3>{respostaApi.titulo_do_documento}</h3>
-          <div
-            className="mt-3 fs-5"
-            id="resultado-final"
-            dangerouslySetInnerHTML={{ __html: respostaApi.texto_completo }}
-          ></div>
-        </section>
+        <>
+          <section id="resposta-completa">
+            <h3>{respostaApi.titulo_do_documento}</h3>
+            <div
+              className="mt-3 fs-5"
+              id="resultado-final"
+              dangerouslySetInnerHTML={{ __html: respostaApi.texto_completo }}
+            ></div>
+          </section>
+          <button
+            type="submit"
+            id="botaoDowload"
+            onClick={() =>
+              fazerDownloadResultado(
+                respostaApi.texto_completo,
+                respostaApi.titulo_do_documento
+              )
+            }
+          >
+            Download
+          </button>
+        </>
       )}
     </>
   );

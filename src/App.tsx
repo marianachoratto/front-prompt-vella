@@ -129,6 +129,7 @@ function App() {
           </section>
           <button
             type="submit"
+            id="botaoDowload"
             onClick={() =>
               fazerDownloadResultado(
                 respostaApi.texto_completo,

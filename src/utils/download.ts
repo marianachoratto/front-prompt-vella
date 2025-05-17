@@ -5,8 +5,8 @@ export function fazerDownloadResultado(
   textoHtml: string,
   titulo_do_documento: string
 ) {
-  const container = document.getElementById("resposta-completa");
-  container!.innerHTML = titulo_do_documento + "/n" + textoHtml;
+  const container = document.createElement("div");
+  container.innerHTML = `<h3>${titulo_do_documento}</h3><div>${textoHtml}</div>`;
 
   const elements: any[] = [];
 

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 
+export let respostaApiDownload: any;
 export function enviarArquivo(
   mode: ModoAtivo,
   selectedFiles: any,

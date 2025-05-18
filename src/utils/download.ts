@@ -65,6 +65,6 @@ export function fazerDownloadResultado(
   const dataAgora = Date.now();
 
   Packer.toBlob(doc).then((blob) => {
-    saveAs(blob, `${titulo_do_documento}-${dataAgora}`);
+    saveAs(blob, `${titulo_do_documento}-${dataAgora}.docx`);
   });
 }

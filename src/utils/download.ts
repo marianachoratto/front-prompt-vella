@@ -32,6 +32,8 @@ export function fazerDownloadResultado(
           return new TextRun({ text: node.textContent, underline: {} });
         case "br":
           return new TextRun({ text: "", break: 1 });
+        case "h3":
+          return new TextRun({ text: node.textContent, size: 26, bold: true });
         default:
           return new TextRun({ text: node.textContent });
       }

@@ -29,7 +29,6 @@ export function enviarArquivo(
   ) as HTMLSelectElement;
 
   const formData = new FormData();
-  // Loop through selected files and append them
   if (selectedFiles) {
     for (let i = 0; i < selectedFiles.length; i++) {
       formData.append("files", selectedFiles[i]);
@@ -58,6 +57,7 @@ export function enviarArquivo(
       promptGerarDocumentoEtapa3.value
     );
 
+  setRespostaApi(null);
   setIsLoading(true);
   const modoAtivo = mode == "documento" ? "gerar-documento" : "gerar-ementa";
   const url =

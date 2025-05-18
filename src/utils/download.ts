@@ -63,6 +63,6 @@ export function fazerDownloadResultado(
   });
 
   Packer.toBlob(doc).then((blob) => {
-    saveAs(blob, "documento-gerado.docx");
+    saveAs(blob, `${titulo_do_documento}`);
   });
 }
